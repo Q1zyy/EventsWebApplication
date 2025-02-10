@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,10 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Mappings\Events\" />
     <Folder Include="UseCases\CategoryUseCases\Commands\" />
-    <Folder Include="UseCases\EventUseCases\Commands\UpdateEvent\" />
-    <Folder Include="UseCases\EventUseCases\Commands\DeleteEvent\" />
   </ItemGroup>
 
 </Project>

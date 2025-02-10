@@ -1,6 +1,11 @@
-﻿using EventsWebApplication.Application.UseCases.EventUseCases.Commands.CreateEvent;
+﻿using EventsWebApplication.Application.UseCases.EventUseCases.Commands.AddPhotoToEvent;
+using EventsWebApplication.Application.UseCases.EventUseCases.Commands.CreateEvent;
+using EventsWebApplication.Application.UseCases.EventUseCases.Commands.DeleteEvent;
+using EventsWebApplication.Application.UseCases.EventUseCases.Commands.DeletePhotoFromEvent;
+using EventsWebApplication.Application.UseCases.EventUseCases.Commands.UpdateEvent;
 using EventsWebApplication.Application.UseCases.EventUseCases.Queries.GetEventById;
 using EventsWebApplication.Application.UseCases.EventUseCases.Queries.GetEventParticipants;
+using EventsWebApplication.Application.UseCases.EventUseCases.Queries.GetEventsAll;
 using EventsWebApplication.Application.UseCases.EventUseCases.Queries.GetEventsByUserId;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +34,13 @@ namespace EventsWebApplication.API.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> GetAllEvents([FromQuery] GetEventsAllQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+            return Ok(result);
+        }
+
+        [HttpGet]
         [Route("{id:int}/participants")]
         public async Task<IActionResult> GetEventParticipants(int id, CancellationToken cancellationToken)
         {
@@ -45,7 +57,38 @@ namespace EventsWebApplication.API.Controllers
         }
 
         [HttpPost]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> CreateEvent([FromForm] CreateEventCommand request, CancellationToken cancellationToken)
+        {
+            await _mediator.Send(request, cancellationToken);
+            return Ok();
+        }  
+        
+        [HttpDelete]
+        public async Task<IActionResult> DeleteEvent(int id, CancellationToken cancellationToken)
+        {
+            await _mediator.Send(new DeleteEventCommand(id), cancellationToken);
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateEvent([FromForm] UpdateEventCommand request, CancellationToken cancellationToken)
+        {
+            await _mediator.Send(request, cancellationToken);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("add-image")]
+        public async Task<IActionResult> DeleteImageFromEvent([FromForm] AddPhotoToEventCommand request, CancellationToken cancellationToken)
+        {
+            await _mediator.Send(request, cancellationToken);
+            return Ok();
+        }    
+        
+        [HttpDelete]
+        [Route("delete-image")]
+        public async Task<IActionResult> DeleteImageFromEvent([FromForm] DeletePhotoFromEventCommand request, CancellationToken cancellationToken)
         {
             await _mediator.Send(request, cancellationToken);
             return Ok();

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EventsWebApplication.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace EventsWebApplication.Application.UseCases.EventUseCases.Commands.CreateEvent
+namespace EventsWebApplication.Application.UseCases.EventUseCases.Commands.UpdateEvent
 {
-    public record CreateEventCommand(
+    public record UpdateEventCommand(
+        int Id,
         string Title,
         string Description,
         DateTime EventDateTime,
@@ -18,5 +18,4 @@ namespace EventsWebApplication.Application.UseCases.EventUseCases.Commands.Creat
         int CategoryId,
         IFormFile Image
     ) : IRequest;
-
 }
