@@ -7,6 +7,7 @@ using EventsWebApplication.Application.Interfaces.Repositories;
 using EventsWebApplication.Domain.Entities;
 using EventsWebApplication.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace EventsWebApplication.Infrastructure.Repositories
 {
@@ -21,5 +22,16 @@ namespace EventsWebApplication.Infrastructure.Repositories
             return await _context.Participants.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
         }
 
+        public async Task<IEnumerable<Participant>> GetEventParticipants(int id, CancellationToken cancellationToken)
+        {
+             return await _context.Participants.Where(p => p.EventId == id)
+                .Include(p => p.User) 
+                .ToListAsync();
+        }
+
+        public async Task<Participant?> GetParticipantByEventAndUserId(int eventId, int userId, CancellationToken cancellationToken)
+        {
+            return await _context.Participants.FirstOrDefaultAsync(p => p.EventId == eventId && p.UserId == userId, cancellationToken);
+        }
     }
 }

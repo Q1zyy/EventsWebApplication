@@ -27,5 +27,24 @@ namespace EventsWebApplication.Infrastructure.Repositories
 
         }
 
+        public override async Task<User?> GetByIdAsync(int id, CancellationToken cancellationToken)
+        {
+            var user = await _context.Users.Include(u => u.Events).FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+            if (user == null)
+            {
+                throw new Exception("No such user");
+            }
+            return user;
+        }
+
+        public async Task<IEnumerable<Event>> GetEventsByUserId(int id, CancellationToken cancellationToken)
+        {
+            var user = await _context.Users.Include(u => u.Events).ThenInclude(e => e.Category).FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+            if (user == null)
+            {
+                throw new Exception("No such user");
+            }
+            return user.Events;
+        }
     }
 }

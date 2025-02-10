@@ -1,5 +1,7 @@
-﻿using EventsWebApplication.Application.UseCases.EventUseCases.Queries.GetEventById;
+﻿using EventsWebApplication.Application.UseCases.EventUseCases.Commands.CreateEvent;
+using EventsWebApplication.Application.UseCases.EventUseCases.Queries.GetEventById;
 using EventsWebApplication.Application.UseCases.EventUseCases.Queries.GetEventParticipants;
+using EventsWebApplication.Application.UseCases.EventUseCases.Queries.GetEventsByUserId;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +34,21 @@ namespace EventsWebApplication.API.Controllers
         {
             var result = await _mediator.Send(new GetEventParticipantsQuery(id), cancellationToken);
             return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("by-user/{id:int}")]
+        public async Task<IActionResult> GetEventsByUserId(int id, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(new GetEventsByUserIdQuery(id), cancellationToken);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateEvent([FromForm] CreateEventCommand request, CancellationToken cancellationToken)
+        {
+            await _mediator.Send(request, cancellationToken);
+            return Ok();
         }
 
     }

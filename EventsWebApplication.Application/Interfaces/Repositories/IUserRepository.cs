@@ -10,5 +10,8 @@ namespace EventsWebApplication.Application.Interfaces.Repositories
     public interface IUserRepository : IRepository<User>
     {
         Task<User> GetByEmailAsync(string email, CancellationToken cancellationToken);
+
+        Task<IEnumerable<Event>> GetEventsByUserId(int id, CancellationToken cancellationToken);
+
     }
 }

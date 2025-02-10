@@ -9,19 +9,19 @@ using MediatR;
 
 namespace EventsWebApplication.Application.UseCases.EventUseCases.Queries.GetEventParticipants
 {
-    public class GetEventParticipantsQueryHandler : IRequestHandler<GetEventParticipantsQuery, IEnumerable<User>>
+    public class GetEventParticipantsQueryHandler : IRequestHandler<GetEventParticipantsQuery, IEnumerable<Participant>>
     {
 
-        private readonly IEventRepository _eventRepository;
+        private readonly IParticipantRepository _participantRepository;
 
-        public GetEventParticipantsQueryHandler(IEventRepository eventRepository)
+        public GetEventParticipantsQueryHandler(IParticipantRepository participantRepository)
         {
-            _eventRepository = eventRepository;
+            _participantRepository = participantRepository;
         }
 
-        public async Task<IEnumerable<User>> Handle(GetEventParticipantsQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Participant>> Handle(GetEventParticipantsQuery request, CancellationToken cancellationToken)
         {
-            return await _eventRepository.GetEventParticipants(request.eventId, cancellationToken);
+            return await _participantRepository.GetEventParticipants(request.eventId, cancellationToken);
         }
     }
 }

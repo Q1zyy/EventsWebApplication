@@ -15,7 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Mappings\Events\" />
     <Folder Include="UseCases\CategoryUseCases\Commands\" />
+    <Folder Include="UseCases\EventUseCases\Commands\UpdateEvent\" />
+    <Folder Include="UseCases\EventUseCases\Commands\DeleteEvent\" />
   </ItemGroup>
 
 </Project>

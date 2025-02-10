@@ -24,12 +24,5 @@ namespace EventsWebApplication.Infrastructure.Repositories
             return await _context.Events.Include(e => e.Category).FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
         }
 
-        public async Task<IEnumerable<User>> GetEventParticipants(int id, CancellationToken cancellationToken)
-        {
-            return _context.Events
-                .Where(e => e.Id == id)
-                .SelectMany(e => e.Participants.Select(p => p.User))
-                .Where(u => u != null);
-        }
     }
 }

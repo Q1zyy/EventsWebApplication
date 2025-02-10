@@ -10,7 +10,5 @@ namespace EventsWebApplication.Application.Interfaces.Repositories
     public interface IEventRepository : IRepository<Event>
     {
 
-        Task<IEnumerable<User>> GetEventParticipants(int id, CancellationToken cancellationToken);
-
     }
 }

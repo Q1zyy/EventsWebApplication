@@ -43,6 +43,16 @@ namespace EventsWebApplication.Infrastructure.Data
                         Place = "BSUIR",
                         Images = null,
                         Participants = new List<Participant>()
+                    }, 
+                    new Event {
+                        Title = "Squid game",
+                        Category = categories[1],
+                        Description = "Kukuma ko ti tire kuku ma",
+                        EventDateTime = DateTime.Now.AddDays(2),
+                        ParticipantsMaxCount = 5,
+                        Place = "Japan",
+                        Images = null,
+                        Participants = new List<Participant>()
                     }
                 });
             }

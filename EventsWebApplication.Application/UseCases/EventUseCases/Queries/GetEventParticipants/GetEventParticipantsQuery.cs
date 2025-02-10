@@ -8,6 +8,6 @@ using MediatR;
 
 namespace EventsWebApplication.Application.UseCases.EventUseCases.Queries.GetEventParticipants
 {
-    public record GetEventParticipantsQuery(int eventId) : IRequest<IEnumerable<User>>;
+    public record GetEventParticipantsQuery(int eventId) : IRequest<IEnumerable<Participant>>;
   
 }
