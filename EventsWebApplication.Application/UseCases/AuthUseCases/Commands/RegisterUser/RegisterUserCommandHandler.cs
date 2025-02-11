@@ -31,8 +31,8 @@ namespace EventsWebApplication.Application.UseCases.AuthUseCases.Commands.Regist
 
         public async Task Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            var usr = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
-            if (usr != null)
+            var have = await _userRepository.IsUserExistByEmail(request.Email, cancellationToken);
+            if (have)
             {
                 throw new Exception("User with this email already exists");
             }

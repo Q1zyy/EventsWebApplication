@@ -16,6 +16,7 @@ namespace EventsWebApplication.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    //[Authorize]
     public class EventsController : Controller
     {
 
@@ -29,7 +30,6 @@ namespace EventsWebApplication.API.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
-        [Authorize(Policy = "AdminPolicy")]
         public async Task<IActionResult> GetEventById(int id, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(new GetEventByIdQuery(id), cancellationToken);
@@ -42,8 +42,8 @@ namespace EventsWebApplication.API.Controllers
         {
             var result = await _mediator.Send(request, cancellationToken);
             return Ok(result);
-        } 
-        
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetEventsWithFilters([FromQuery] GetEventsWithFiltersQuery request, CancellationToken cancellationToken)
         {
@@ -73,8 +73,8 @@ namespace EventsWebApplication.API.Controllers
         {
             await _mediator.Send(request, cancellationToken);
             return Ok();
-        }  
-        
+        }
+
         [HttpDelete]
         public async Task<IActionResult> DeleteEvent(int id, CancellationToken cancellationToken)
         {
@@ -99,7 +99,7 @@ namespace EventsWebApplication.API.Controllers
         
         [HttpDelete]
         [Route("delete-image")]
-        public async Task<IActionResult> DeleteImageFromEvent([FromForm] DeletePhotoFromEventCommand request, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteImageFromEvent([FromBody] DeletePhotoFromEventCommand request, CancellationToken cancellationToken)
         {
             await _mediator.Send(request, cancellationToken);
             return Ok();

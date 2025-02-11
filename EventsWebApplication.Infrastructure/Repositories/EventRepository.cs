@@ -25,7 +25,7 @@ namespace EventsWebApplication.Infrastructure.Repositories
         {
             int pages = (_context.Events.Count() + pageSize - 1) / pageSize;
             int skip = pageSize * (pageNo - 1);
-            var result = await _context.Events.Skip(skip).Take(pageSize).ToListAsync();
+            var result = await _context.Events.Include(e => e.Category).Include(e => e.Participants).Skip(skip).Take(pageSize).ToListAsync();
             return new PaginatedList<Event>
             {
                 Items = result,
@@ -36,12 +36,12 @@ namespace EventsWebApplication.Infrastructure.Repositories
 
         public async override Task<Event?> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
-            return await _context.Events.Include(e => e.Category).FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+            return await _context.Events.Include(e => e.Category).Include(e => e.Participants).FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
         }
 
         public async Task<PaginatedList<Event>> GetEventsWithFilters(CancellationToken cancellationToken, string? title, DateTime? eventFrom, DateTime? eventTo, string? place, int? categoryId, int pageNo = 1, int pageSize = 2)
         {
-            IQueryable<Event> query = _context.Events.AsQueryable();
+            IQueryable<Event> query = _context.Events.Include(e => e.Category).Include(e => e.Participants).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(title))
             {

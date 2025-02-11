@@ -42,7 +42,7 @@ namespace EventsWebApplication.Application.UseCases.EventUseCases.Commands.Updat
                 throw new Exception("No such event");
             }
             
-            _mapper.Map(request, eventObj);
+            _mapper.Map(request, eventObj); 
             
             if (request.Image != null)
             {

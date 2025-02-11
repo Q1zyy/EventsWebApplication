@@ -56,5 +56,15 @@ namespace EventsWebApplication.Infrastructure.Repositories
             }
             return user;
         }
+
+        public async Task<bool> IsUserExistByEmail(string email, CancellationToken cancellationToken)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
+            if (user == null)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

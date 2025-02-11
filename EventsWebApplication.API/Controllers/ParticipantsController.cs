@@ -19,16 +19,16 @@ namespace EventsWebApplication.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddParticipationInEvent(int eventId, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddParticipationInEvent(AddParticipationInEventCommand request, CancellationToken cancellationToken)
         {
-            await _mediator.Send(new AddParticipationInEventCommand(eventId, 1), cancellationToken);
+            await _mediator.Send(request, cancellationToken);
             return Ok();
         } 
         
         [HttpDelete]
-        public async Task<IActionResult> RemoveParticipationInEvent(int eventId, CancellationToken cancellationToken)
+        public async Task<IActionResult> RemoveParticipationInEvent(RemoveParticipationInEventCommand request, CancellationToken cancellationToken)
         {
-            await _mediator.Send(new RemoveParticipationInEventCommand(eventId, 1), cancellationToken);
+            await _mediator.Send(request, cancellationToken);
             return Ok();
         }
         

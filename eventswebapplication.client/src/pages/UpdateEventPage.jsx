@@ -1,55 +1,71 @@
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import "./../css/CreateEvent.css";
+import apiClient from './../api/ApiClient';
+//import "./../css/UpdateEventPage.css";
 
-const CreateEventPage = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+const UpdateEventPage = () => {
+    const { id } = useParams();
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const [categories, setCategories] = useState([]);
     const [image, setImage] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
+        const fetchEvent = async () => {
+            try {
+                const response = await apiClient.get(`/events/${id}`);
+                const event = response.data;
+
+                setValue("Title", event.title);
+                setValue("Description", event.description);
+                setValue("EventDateTime", event.eventDateTime);
+                setValue("ParticipantsMaxCount", event.participantsMaxCount);
+                setValue("Place", event.place);
+                setValue("CategoryId", event.categoryId);
+            } catch (error) {
+                console.error("Error fetching event:", error);
+            }
+        };
+
         const fetchCategories = async () => {
             try {
-                const response = await axios.get("https://localhost:7287/api/categories");
+                const response = await apiClient.get("/categories");
                 setCategories(response.data);
             } catch (error) {
                 console.error("Error fetching categories:", error);
             }
         };
+
+        fetchEvent();
         fetchCategories();
-    }, []);
+    }, [id, setValue]);
 
     const onSubmit = async (data) => {
         const formData = new FormData();
 
+        formData.append("Id", id);
         formData.append("Title", data.Title);
         formData.append("Description", data.Description);
         formData.append("EventDateTime", data.EventDateTime);
         formData.append("ParticipantsMaxCount", data.ParticipantsMaxCount);
         formData.append("Place", data.Place);
-        formData.append("CategoryId", parseInt(data.Category, 10));
+        formData.append("CategoryId", parseInt(data.CategoryId, 10));
 
         if (image) {
             formData.append("Image", image);
         }
 
         try {
-            const response = await axios.post("https://localhost:7287/api/events", formData, {
+            await apiClient.put("/events", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             });
-
-            if (response.status === 201 || response.status === 200) {
-                navigate("/");
-            } else {
-                console.error("Failed to create event");
-            }
+            navigate("/");
         } catch (error) {
-            console.error("Error submitting form", error);
+            console.error("Error updating event:", error);
         }
     };
 
@@ -58,8 +74,8 @@ const CreateEventPage = () => {
     };
 
     return (
-        <div className="create-event-container">
-            <h2 className="title">Create Event</h2>
+        <div className="update-event-container">
+            <h2 className="title">Edit Event</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="event-form">
                 <div className="form-group">
                     <label>Title</label>
@@ -91,13 +107,13 @@ const CreateEventPage = () => {
 
                 <div className="form-group">
                     <label>Category</label>
-                    <select {...register("Category", { required: true })}>
+                    <select {...register("CategoryId", { required: true })}>
                         <option value="">Select a category</option>
                         {categories.map(category => (
                             <option key={category.id} value={category.id}>{category.title}</option>
                         ))}
                     </select>
-                    {errors.Category && <span className="error-message">Category is required</span>}
+                    {errors.CategoryId && <span className="error-message">Category is required</span>}
                 </div>
 
                 <div className="form-group">
@@ -105,10 +121,10 @@ const CreateEventPage = () => {
                     <input type="file" onChange={handleImageChange} />
                 </div>
 
-                <button type="submit" className="submit-button">Create Event</button>
+                <button type="submit" className="submit-button">Update Event</button>
             </form>
         </div>
     );
 };
 
-export default CreateEventPage;
+export default UpdateEventPage;

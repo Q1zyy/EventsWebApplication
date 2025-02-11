@@ -11,6 +11,8 @@ namespace EventsWebApplication.Application.Interfaces.Repositories
     {
         Task<User> GetByEmailAsync(string email, CancellationToken cancellationToken);
 
+        Task<bool> IsUserExistByEmail(string email, CancellationToken cancellationToken);
+
         Task<IEnumerable<Event>> GetEventsByUserId(int id, CancellationToken cancellationToken);
 
         Task<User> GetUserByRefreshToken(string refresh, CancellationToken cancellationToken);

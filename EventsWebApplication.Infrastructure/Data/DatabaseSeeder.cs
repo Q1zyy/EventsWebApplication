@@ -41,7 +41,7 @@ namespace EventsWebApplication.Infrastructure.Data
                         EventDateTime = DateTime.Now.AddDays(10),
                         ParticipantsMaxCount = 20,
                         Place = "BSUIR",
-                        Images = null,
+                        Images = new List<string> { "uploads\\b3864981-9648-43b2-a04f-09aae5ff14e1.png" },
                         Participants = new List<Participant>()
                     }, 
                     new Event {
@@ -51,7 +51,7 @@ namespace EventsWebApplication.Infrastructure.Data
                         EventDateTime = DateTime.Now.AddDays(2),
                         ParticipantsMaxCount = 5,
                         Place = "Japan",
-                        Images = null,
+                        Images = new List<string> { "uploads\\0acaa486-eacc-4f6e-9bbe-4498e23c9c4d.png" },
                         Participants = new List<Participant>()
                     }
                 });
