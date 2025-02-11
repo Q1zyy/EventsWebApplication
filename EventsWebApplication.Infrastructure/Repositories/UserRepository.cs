@@ -46,5 +46,15 @@ namespace EventsWebApplication.Infrastructure.Repositories
             }
             return user.Events;
         }
+
+        public async Task<User> GetUserByRefreshToken(string refresh, CancellationToken cancellationToken)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken.Equals(refresh));
+            if (user == null)
+            {
+                throw new Exception("No such user");
+            }
+            return user;
+        }
     }
 }

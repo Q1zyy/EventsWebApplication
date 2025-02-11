@@ -1,4 +1,5 @@
 ﻿using EventsWebApplication.Application.UseCases.AuthUseCases.Commands.LoginUser;
+using EventsWebApplication.Application.UseCases.AuthUseCases.Commands.RefreshToken;
 using EventsWebApplication.Application.UseCases.AuthUseCases.Commands.RegisterUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -32,6 +33,14 @@ namespace EventsWebApplication.API.Controllers
         {
             var result = await _mediator.Send(request, cancellationToken);
             return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("refresh")]
+        public async Task<IActionResult> Refresh([FromBody] RefreshTokenCommand request, CancellationToken cancellationToken)
+        {
+            var token = await _mediator.Send(request, cancellationToken);
+            return Ok(token);
         }
 
     }

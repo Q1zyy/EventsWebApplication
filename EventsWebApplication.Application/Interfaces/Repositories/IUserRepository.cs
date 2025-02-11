@@ -13,5 +13,7 @@ namespace EventsWebApplication.Application.Interfaces.Repositories
 
         Task<IEnumerable<Event>> GetEventsByUserId(int id, CancellationToken cancellationToken);
 
+        Task<User> GetUserByRefreshToken(string refresh, CancellationToken cancellationToken);
+
     }
 }
