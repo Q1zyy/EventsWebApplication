@@ -7,7 +7,9 @@ using EventsWebApplication.Application.UseCases.EventUseCases.Queries.GetEventBy
 using EventsWebApplication.Application.UseCases.EventUseCases.Queries.GetEventParticipants;
 using EventsWebApplication.Application.UseCases.EventUseCases.Queries.GetEventsAll;
 using EventsWebApplication.Application.UseCases.EventUseCases.Queries.GetEventsByUserId;
+using EventsWebApplication.Application.UseCases.EventUseCases.Queries.GetEventsWithFilters;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventsWebApplication.API.Controllers
@@ -27,6 +29,7 @@ namespace EventsWebApplication.API.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
+        [Authorize(Policy = "AdminPolicy")]
         public async Task<IActionResult> GetEventById(int id, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(new GetEventByIdQuery(id), cancellationToken);
@@ -34,7 +37,15 @@ namespace EventsWebApplication.API.Controllers
         }
 
         [HttpGet]
+        [Route("all")]
         public async Task<IActionResult> GetAllEvents([FromQuery] GetEventsAllQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+            return Ok(result);
+        } 
+        
+        [HttpGet]
+        public async Task<IActionResult> GetEventsWithFilters([FromQuery] GetEventsWithFiltersQuery request, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(request, cancellationToken);
             return Ok(result);

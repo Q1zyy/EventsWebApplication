@@ -18,6 +18,8 @@ namespace EventsWebApplication.Domain.Entities
         public string PasswordHash { get; set; } = string.Empty;
         public UserRole Role { get; set; } = UserRole.User;
         public ICollection<Event> Events { get; set; } = [];
+        public string RefreshToken { get; set; } = string.Empty;
+        public DateTime RefreshTokenExpiryTime { get; set; }
 
     }
 }

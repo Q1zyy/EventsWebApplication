@@ -10,7 +10,9 @@ namespace EventsWebApplication.Application.Interfaces.Repositories
 {
     public interface IEventRepository : IRepository<Event>
     {
-        public Task<PaginatedList<Event>> GetAllEvents(int pageNo = 1, int pageSize = 2, CancellationToken cancellationToken);
+        public Task<PaginatedList<Event>> GetAllEvents(CancellationToken cancellationToken, int pageNo = 1, int pageSize = 2);
+        
+        public Task<PaginatedList<Event>> GetEventsWithFilters(CancellationToken cancellationToken, string? title, DateTime? eventFrom, DateTime? eventTo, string? place, int? categoryId, int pageNo = 1, int pageSize = 2);
 
     }
 }

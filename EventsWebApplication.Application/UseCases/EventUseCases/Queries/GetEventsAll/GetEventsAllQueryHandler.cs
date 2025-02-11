@@ -22,7 +22,7 @@ namespace EventsWebApplication.Application.UseCases.EventUseCases.Queries.GetEve
 
         public async Task<PaginatedList<Event>> Handle(GetEventsAllQuery request, CancellationToken cancellationToken)
         {
-            return await _eventRepository.GetAllEvents(request.PageNo, request.PageSize, cancellationToken);
+            return await _eventRepository.GetAllEvents(cancellationToken, request.PageNo, request.PageSize);
         }
     }
 }
