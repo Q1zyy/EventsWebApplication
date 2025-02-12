@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import "./../css/CreateEvent.css";
+import apiClient from "./../api/ApiClient";
+
 
 const CreateEventPage = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -13,7 +14,7 @@ const CreateEventPage = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get("https://localhost:7287/api/categories");
+                const response = await apiClient.get("https://localhost:7287/api/categories");
                 setCategories(response.data);
             } catch (error) {
                 console.error("Error fetching categories:", error);
@@ -37,7 +38,7 @@ const CreateEventPage = () => {
         }
 
         try {
-            const response = await axios.post("https://localhost:7287/api/events", formData, {
+            const response = await apiClient.post("https://localhost:7287/api/events", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },

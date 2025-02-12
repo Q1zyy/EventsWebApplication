@@ -69,6 +69,7 @@ namespace EventsWebApplication.API.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
+        [Authorize(Policy = "AdminPolicy")]
         public async Task<IActionResult> CreateEvent([FromForm] CreateEventCommand request, CancellationToken cancellationToken)
         {
             await _mediator.Send(request, cancellationToken);
@@ -76,6 +77,7 @@ namespace EventsWebApplication.API.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Policy = "AdminPolicy")]
         public async Task<IActionResult> DeleteEvent(int id, CancellationToken cancellationToken)
         {
             await _mediator.Send(new DeleteEventCommand(id), cancellationToken);
@@ -83,6 +85,7 @@ namespace EventsWebApplication.API.Controllers
         }
 
         [HttpPut]
+        [Authorize(Policy = "AdminPolicy")]
         public async Task<IActionResult> UpdateEvent([FromForm] UpdateEventCommand request, CancellationToken cancellationToken)
         {
             await _mediator.Send(request, cancellationToken);
@@ -91,7 +94,8 @@ namespace EventsWebApplication.API.Controllers
 
         [HttpPost]
         [Route("add-image")]
-        public async Task<IActionResult> DeleteImageFromEvent([FromForm] AddPhotoToEventCommand request, CancellationToken cancellationToken)
+        [Authorize(Policy = "AdminPolicy")]
+        public async Task<IActionResult> AddImageToEvent([FromForm] AddPhotoToEventCommand request, CancellationToken cancellationToken)
         {
             await _mediator.Send(request, cancellationToken);
             return Ok();
@@ -99,6 +103,7 @@ namespace EventsWebApplication.API.Controllers
         
         [HttpDelete]
         [Route("delete-image")]
+        [Authorize(Policy = "AdminPolicy")]
         public async Task<IActionResult> DeleteImageFromEvent([FromBody] DeletePhotoFromEventCommand request, CancellationToken cancellationToken)
         {
             await _mediator.Send(request, cancellationToken);

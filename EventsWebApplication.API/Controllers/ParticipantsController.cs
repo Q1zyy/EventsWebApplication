@@ -1,6 +1,7 @@
 ﻿using EventsWebApplication.Application.UseCases.ParticipantsUseCases.Commands.AddParticipationInEvent;
 using EventsWebApplication.Application.UseCases.ParticipantsUseCases.Commands.RemoveParticipationInEvent;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventsWebApplication.API.Controllers
@@ -19,6 +20,7 @@ namespace EventsWebApplication.API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddParticipationInEvent(AddParticipationInEventCommand request, CancellationToken cancellationToken)
         {
             await _mediator.Send(request, cancellationToken);
@@ -26,6 +28,7 @@ namespace EventsWebApplication.API.Controllers
         } 
         
         [HttpDelete]
+        [Authorize]
         public async Task<IActionResult> RemoveParticipationInEvent(RemoveParticipationInEventCommand request, CancellationToken cancellationToken)
         {
             await _mediator.Send(request, cancellationToken);

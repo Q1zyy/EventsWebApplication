@@ -12,7 +12,7 @@ const EventsPage = () => {
         place: "",
         categoryId: "",
         pageNo: 1,
-        pageSize: 10,
+        pageSize: 2,
     });
     const [totalCount, setTotalCount] = useState(0);
     const [categories, setCategories] = useState([]);
@@ -44,7 +44,7 @@ const EventsPage = () => {
         if (window.confirm("Are you sure you want to delete this event?")) {
             try {
                 await apiClient.delete(`/events/${eventId}`);
-                fetchEvents(); // Обновляем список событий после удаления
+                fetchEvents(); 
             } catch (error) {
                 console.error("Error deleting event:", error);
             }

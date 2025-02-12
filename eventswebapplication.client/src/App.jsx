@@ -17,7 +17,7 @@ function App() {
         <Navbar />
         <div>
             <Routes>
-                <Route path="/" element={<Navigate to="/create_event" />} />
+                <Route path="/" element={<Navigate to="/events" />} />
                 <Route path="/create_event" element={<CreateEventPage />} />
                 <Route path="/event/:id" element={< EventDetailsPage />} />
                 <Route path="/login" element={< LoginPage />} />
