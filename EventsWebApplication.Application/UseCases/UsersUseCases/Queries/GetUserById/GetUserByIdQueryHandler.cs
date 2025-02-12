@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Application.Interfaces.Repositories;
 using EventsWebApplication.Domain.Entities;
 using MediatR;
@@ -21,7 +22,7 @@ namespace EventsWebApplication.Application.UseCases.UsersUseCases.Queries.GetUse
             var result = await _userRepository.GetByIdAsync(request.Id, cancellationToken);
             if (result == null)
             {
-                throw new Exception($"No user with Id {request.Id}");
+                throw new NotFoundException($"No user with Id {request.Id}");
             }
             return result;
         }

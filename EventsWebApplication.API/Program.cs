@@ -19,6 +19,7 @@ using EventsWebApplication.API.Validators.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using EventsWebApplication.API.Middleware;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +34,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
     b => b.MigrationsAssembly("EventsWebApplication.Infrastructure")));
+
+
+builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 
 
 builder.Services.AddFluentValidationAutoValidation();
@@ -124,6 +128,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 
 app.MapControllers();
 

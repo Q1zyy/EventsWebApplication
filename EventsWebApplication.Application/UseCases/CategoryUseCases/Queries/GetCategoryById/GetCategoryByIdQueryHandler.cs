@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Application.Interfaces.Repositories;
 using EventsWebApplication.Domain.Entities;
 using MediatR;
@@ -24,7 +25,7 @@ namespace EventsWebApplication.Application.UseCases.CategoryUseCases.Queries.Get
             var result = await _categoryRepository.GetByIdAsync(request.Id, cancellationToken);
             if (result == null)
             {
-                throw new Exception($"No category with ID {request.Id}");
+                throw new NotFoundException($"No category with ID {request.Id}");
             }
             return result;
         }

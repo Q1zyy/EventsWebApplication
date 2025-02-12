@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Application.Interfaces.Repositories;
 using EventsWebApplication.Domain.Entities;
 using MediatR;
@@ -24,7 +25,7 @@ namespace EventsWebApplication.Application.UseCases.UsersUseCases.Queries.GetUse
             var result = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
             if (result == null)
             {
-                throw new Exception($"No user with email {request.Email}");
+                throw new NotFoundException($"No user with email {request.Email}");
             }
             return result;
         }

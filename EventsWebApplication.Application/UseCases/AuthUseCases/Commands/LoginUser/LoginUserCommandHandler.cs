@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EventsWebApplication.Application.DTOs;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Application.Interfaces.Auth;
 using EventsWebApplication.Application.Interfaces.Repositories;
 using MediatR;
@@ -32,12 +33,12 @@ namespace EventsWebApplication.Application.UseCases.AuthUseCases.Commands.LoginU
             var user = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
             if (user == null)
             {
-                throw new Exception("No such user.");
+                throw new BadRequestException("No such user.");
             }
 
             if (!_passwordHasher.Verify(request.Password, user.PasswordHash))
             {
-                throw new Exception("Incorrect credentials.");
+                throw new BadRequestException("Incorrect credentials.");
             }
 
             var accessToken = _jwtService.GenerateAccessToken(user);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Application.Interfaces.Repositories;
 using EventsWebApplication.Domain.Entities;
 using MediatR;
@@ -24,7 +25,7 @@ namespace EventsWebApplication.Application.UseCases.EventUseCases.Queries.GetEve
 
             if (eventObj == null)
             {
-                throw new Exception($"Event with ID {request.Id} not found");
+                throw new NotFoundException($"Event with ID {request.Id} not found");
             }
             
             return eventObj;

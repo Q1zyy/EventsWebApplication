@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Application.Interfaces.Repositories;
 using EventsWebApplication.Domain.Entities;
 using MediatR;
@@ -33,22 +34,22 @@ namespace EventsWebApplication.Application.UseCases.ParticipantsUseCases.Command
 
             if (eventObj == null)
             {
-                throw new Exception($"Event with ID {request.EventId} not found");
+                throw new NotFoundException($"Event with ID {request.EventId} not found");
             }
 
             if (eventObj.Participants.Count >= eventObj.ParticipantsMaxCount)
             {
-                throw new Exception($"No more slots to this Event");
+                throw new BadRequestException($"No more slots to this Event");
             }
 
             if (user == null)
             {
-                throw new Exception("No such user");
+                throw new NotFoundException("No such user");
             }
 
             if (user.Events.Contains(eventObj))
             {
-                throw new Exception($"Already participate");
+                throw new BadRequestException($"Already participate");
             }
 
             var participant = new Participant() {

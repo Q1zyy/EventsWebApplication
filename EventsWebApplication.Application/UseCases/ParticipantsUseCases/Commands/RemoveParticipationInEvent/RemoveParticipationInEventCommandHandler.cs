@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Application.Interfaces.Repositories;
 using EventsWebApplication.Domain.Entities;
 using MediatR;
@@ -34,24 +35,24 @@ namespace EventsWebApplication.Application.UseCases.ParticipantsUseCases.Command
 
             if (eventObj == null)
             {
-                throw new Exception($"Event with ID {request.EventId} not found");
+                throw new NotFoundException($"Event with ID {request.EventId} not found");
             }
 
             if (user == null)
             {
-                throw new Exception("No such user");
+                throw new NotFoundException("No such user");
             }
 
             if (!user.Events.Contains(eventObj))
             {
-                throw new Exception($"Users doesnt participate in this event");
+                throw new BadRequestException($"Users doesnt participate in this event");
             }
 
             var participant = await _participantRepository.GetParticipantByEventAndUserId(request.EventId, request.UserId, cancellationToken);
 
             if (participant == null)
             {
-                throw new Exception("No such participant");
+                throw new NotFoundException("No such participant");
             }
 
             await _participantRepository.DeleteAsync(participant.Id, cancellationToken);

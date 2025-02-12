@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Application.Interfaces.Auth;
 using EventsWebApplication.Application.Interfaces.Repositories;
 using EventsWebApplication.Domain.Entities;
@@ -34,7 +35,7 @@ namespace EventsWebApplication.Application.UseCases.AuthUseCases.Commands.Regist
             var have = await _userRepository.IsUserExistByEmail(request.Email, cancellationToken);
             if (have)
             {
-                throw new Exception("User with this email already exists");
+                throw new AlreadyExistsException("User with this email already exists");
             }
             var user = _mapper.Map<User>(request);
             user.PasswordHash = _passwordHasher.Hash(request.Password);

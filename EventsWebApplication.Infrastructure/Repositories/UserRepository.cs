@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Application.Interfaces.Repositories;
 using EventsWebApplication.Domain.Entities;
 using EventsWebApplication.Infrastructure.Data;
@@ -21,7 +22,7 @@ namespace EventsWebApplication.Infrastructure.Repositories
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
             if (user == null)
             {
-                throw new Exception("No such user");
+                throw new NotFoundException("No such user");
             }
             return user;
 
@@ -32,7 +33,7 @@ namespace EventsWebApplication.Infrastructure.Repositories
             var user = await _context.Users.Include(u => u.Events).FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
             if (user == null)
             {
-                throw new Exception("No such user");
+                throw new NotFoundException("No such user");
             }
             return user;
         }
@@ -42,7 +43,7 @@ namespace EventsWebApplication.Infrastructure.Repositories
             var user = await _context.Users.Include(u => u.Events).ThenInclude(e => e.Category).FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
             if (user == null)
             {
-                throw new Exception("No such user");
+                throw new NotFoundException("No such user");
             }
             return user.Events;
         }
@@ -52,7 +53,7 @@ namespace EventsWebApplication.Infrastructure.Repositories
             var user = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken.Equals(refresh));
             if (user == null)
             {
-                throw new Exception("No such user");
+                throw new NotFoundException("No such user");
             }
             return user;
         }

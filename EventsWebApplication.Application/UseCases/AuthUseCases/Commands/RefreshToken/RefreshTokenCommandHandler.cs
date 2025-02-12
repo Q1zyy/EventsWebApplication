@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Application.Interfaces.Auth;
 using EventsWebApplication.Application.Interfaces.Repositories;
 using MediatR;
@@ -28,12 +29,12 @@ namespace EventsWebApplication.Application.UseCases.AuthUseCases.Commands.Refres
             
             if (user == null)
             {
-                throw new Exception("No such user");
+                throw new NotFoundException("No such user");
             }
             
             if (user.RefreshTokenExpiryTime < DateTime.UtcNow)
             {
-                throw new Exception("Token expired");
+                throw new BadRequestException("Token expired");
             }
 
             var newToken = _jwtService.GenerateAccessToken(user);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Application.Interfaces.Image;
 using EventsWebApplication.Application.Interfaces.Repositories;
 using MediatR;
@@ -25,7 +26,7 @@ namespace EventsWebApplication.Application.UseCases.EventUseCases.Commands.Delet
 
             if (eventObj == null)
             {
-                throw new Exception("No such event");
+                throw new NotFoundException("No such event");
             }
 
             if (eventObj.Images != null)

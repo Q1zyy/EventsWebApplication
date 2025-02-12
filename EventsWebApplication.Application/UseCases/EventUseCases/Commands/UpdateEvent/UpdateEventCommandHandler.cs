@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Application.Interfaces.Image;
 using EventsWebApplication.Application.Interfaces.Repositories;
 using EventsWebApplication.Domain.Entities;
@@ -39,7 +40,7 @@ namespace EventsWebApplication.Application.UseCases.EventUseCases.Commands.Updat
 
             if (eventObj == null)
             {
-                throw new Exception("No such event");
+                throw new NotFoundException("No such event");
             }
             
             _mapper.Map(request, eventObj); 

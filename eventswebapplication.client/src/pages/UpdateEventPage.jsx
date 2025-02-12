@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import apiClient from './../api/ApiClient';
 //import "./../css/UpdateEventPage.css";
 

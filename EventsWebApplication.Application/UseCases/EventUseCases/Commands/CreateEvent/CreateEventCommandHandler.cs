@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Application.Interfaces.Image;
 using EventsWebApplication.Application.Interfaces.Repositories;
 using EventsWebApplication.Domain.Entities;
@@ -37,6 +38,10 @@ namespace EventsWebApplication.Application.UseCases.EventUseCases.Commands.Creat
             var path = await _imageService.SaveImageAsync(request.Image);
             var eventObj = _mapper.Map<Event>(request);
             var category = await _categoryRepository.GetByIdAsync(request.CategoryId, cancellationToken);
+            if (category == null)
+            {
+                throw new NotFoundException("Category not found");
+            }
             eventObj.Category = category;
             eventObj.Images = new List<string> { path };
             await _eventRepository.AddAsync(eventObj, cancellationToken);
