@@ -1,4 +1,6 @@
-﻿using EventsWebApplication.Application.UseCases.ParticipantsUseCases.Commands.AddParticipationInEvent;
+﻿using System.Diagnostics;
+using System.Security.Claims;
+using EventsWebApplication.Application.UseCases.ParticipantsUseCases.Commands.AddParticipationInEvent;
 using EventsWebApplication.Application.UseCases.ParticipantsUseCases.Commands.RemoveParticipationInEvent;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

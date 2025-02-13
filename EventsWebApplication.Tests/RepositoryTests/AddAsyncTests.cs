@@ -66,7 +66,7 @@ namespace EventsWebApplication.Tests.RepositoryTests
 
             // Act
             await repository.AddAsync(category, CancellationToken.None);
-            var savedCategory = await context.Categories.FindAsync(1);
+            var savedCategory = await context.Categories.FindAsync(2);
 
             // Assert
             savedCategory.Should().NotBeNull();
