@@ -1,0 +1,54 @@
+version: '3.4'
+
+services:
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api 
+    ports:
+      - "7287:7287" 
+      - "5253:5253" 
+    depends_on:
+      - mssql 
+    volumes:
+      - ./EventsWebApplication.API/uploads:/app/uploads
+    networks:
+      - events_network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development  
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/https.pfx
+
+
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=StrongPass123!  
+    ports:
+      - "1433:1433"  
+    volumes:
+      - mssql-data:/var/opt/mssql  
+    networks:
+      - events_network
+
+
+  react-app:
+    build:
+      context: .  
+      dockerfile: Dockerfile.client
+    ports:
+      - "51326:51326"
+    networks:
+      - events_network
+    environment:
+      - CHOKIDAR_USEPOLLING=true 
+
+volumes:
+  mssql-data:  
+
+networks:
+  events_network:  
+    driver: bridge

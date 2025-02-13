@@ -33,7 +33,7 @@ const Navbar = () => {
                 <Link to="/my-events" className="hover:underline">MyEvents</Link>
                 {isAuthenticated ? (
                     <>
-                        <p>{user.email}</p>
+                        <p style={{ color: 'black' }}>{user.email}</p>
                         <button onClick={handleLogout}>Logout</button>
                     </>
                    ) : (<></>)

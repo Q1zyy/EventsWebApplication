@@ -162,7 +162,7 @@ const EventsPage = () => {
 
                         {event.images && event.images.length > 0 && (
                             <img
-                                src={`https://localhost:7287/${event.images[0]}`}
+                                src={`http://localhost:5253/${event.images[0]}`}
                                 alt={event.title}
                                 className="event-image"
                             />

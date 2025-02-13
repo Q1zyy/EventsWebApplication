@@ -103,7 +103,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-app.UseCors("AllowAll");
 
 app.UseStaticFiles();
 
@@ -122,10 +121,19 @@ app.UseStaticFiles(new StaticFileOptions
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwaggerUI(c => 
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
+    c.RoutePrefix = "swagger";
+    
+    // Явно указываем схему HTTP
+    c.ConfigObject.AdditionalItems["schemes"] = new[] { "http" }; 
+});
 }
 
-app.UseHttpsRedirection();
+app.UseCors("AllowAll");
+
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

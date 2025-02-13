@@ -77,6 +77,7 @@ namespace EventsWebApplication.API.Controllers
         }
 
         [HttpDelete]
+        [Route("{id:int}")]
         [Authorize(Policy = "AdminPolicy")]
         public async Task<IActionResult> DeleteEvent(int id, CancellationToken cancellationToken)
         {

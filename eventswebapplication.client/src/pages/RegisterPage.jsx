@@ -1,6 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import apiClient from "./../api/ApiClient";
+
 
 const RegisterPage = () => {
     const [formData, setFormData] = useState({
@@ -34,8 +35,8 @@ const RegisterPage = () => {
         }
 
         try {
-            const response = await axios.post(
-                "https://localhost:7287/api/auth/register",
+            const response = await apiClient.post(
+                "/auth/register",
                 JSON.stringify(formData), 
                 {
                     headers: {

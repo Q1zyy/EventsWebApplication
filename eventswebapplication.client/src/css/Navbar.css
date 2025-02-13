@@ -4,9 +4,18 @@ nav {
     left: 0;
     width: 100%;
     color: white;
+    background-color: floralwhite;
     padding: 0.1rem;
     z-index: 50;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
 }
+
+    nav div {
+        display: flex;
+        align-items: center; 
+    }
 
     nav a {
         margin-right: 1rem;
@@ -20,7 +29,5 @@ nav {
         }
 
 .pt-16 {
-    padding-top: 4rem; 
+    padding-top: 4rem;
 }
-
-

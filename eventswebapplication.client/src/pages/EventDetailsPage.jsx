@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import apiClient from "./../api/ApiClient";
+import "./../css/EventDetails.css";
+
 
 const EventDetailsPage = () => {
     const [event, setEvent] = useState(null);
@@ -127,7 +129,7 @@ const EventDetailsPage = () => {
                     <div>
                         {event.images.map((image, index) => (
                             <div key={index}>
-                                <img src={`https://localhost:7287/${image}`} alt={`Event image ${index + 1}`} style={{ width: '200px', height: '200px', objectFit: 'cover', borderRadius: '8px' }} />
+                                <img src={`http://localhost:5253/${image}`} alt={`Event image ${index + 1}`} style={{ width: '200px', height: '200px', objectFit: 'cover', borderRadius: '8px' }} />
                                 {isAdmin && <button onClick={() => handleDeleteImage(image)}>Delete</button>}
                             </div>
                         ))}
