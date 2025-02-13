@@ -39,7 +39,6 @@ Password: 123456789
 
 2. User
 
-- User 1
 ```bash
 Email: paskyshka@mail.ru
 Password: paskishka
